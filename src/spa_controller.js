@@ -36,24 +36,28 @@ var SPA = (function (spa, global) {
             _config = config;
         }
         ,main:function() {
-            this.jump(_config.main);
+            if(_config && _config.main) {
+                this.jump(_config.main);
+            }
         }
         ,listener: function(router) {
             var that = this;
             $(document).ready(function() {
-                var bindViews = _config.bindViews;
-                for(var container in bindViews) {
-                    var views = bindViews[container];
-                    for(var i in views) {
-                        views[i].container = container;
-                        views[i].bindEvents();
+                if(_config && _config.bindViews) {
+                    var bindViews = _config.bindViews;
+                    for(var container in bindViews) {
+                        var views = bindViews[container];
+                        for(var i in views) {
+                            views[i].container = container;
+                            views[i].bindEvents();
+                        }
                     }
-                }
-                var hash = spa.lang.getUrlHash();
-                if(hash !== _config.main) {
-                    that.jump(_config.main);
-                } else {
-                    onchange();
+                    var hash = spa.lang.getUrlHash();
+                    if(hash !== _config.main) {
+                        that.jump(_config.main);
+                    } else {
+                        onchange();
+                    }
                 }
             });
             _routers = router;

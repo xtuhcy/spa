@@ -24,6 +24,7 @@ module.exports = function (grunt) {
                     'src/spa_view.js',
                     'src/spa_interceptor.js',
                     'src/spa_validator.js',
+                    'src/spa_localstorage.js',
                     'src/spa_model.js',
                     'src/spa_controller.js'],
                 dest: 'dist/<%= pkg.name %>.js'
