@@ -1,0 +1,72 @@
+/**
+ * Created by huchengyi on 14-4-11.
+ * 控制层：
+ * 根据url的hash
+ */
+var SPA = (function (spa, global) {
+    var _config, _routers;
+    var matchRouter = function(router, hash) {
+        var routerPattern = /\*\w+|(\w*?):(\w+)/g;
+        var paramValue=[];
+        var hashPattern = new RegExp("^"+router.replace(routerPattern, "$1(\\\S*)")+"$");
+        var hashValues = hash.match(hashPattern);
+        if (hashValues != null) {
+            for (var j = 1; j < hashValues.length; j++) {
+                paramValue[j-1]=hashValues[j];
+            }
+        }
+        return {
+            match:hashValues != null
+            ,params:paramValue
+        };
+    };
+    var onchange = function(event) {
+        var hash = spa.lang.getUrlHash();
+        console.debug("hash : %s, event : %o", hash, event);
+        for(var router in _routers) {
+            var matchParams = matchRouter(router, hash);
+            if(matchParams.match) {
+                _routers[router].apply(spa.controller, matchParams.params);
+                //break;
+            }
+        }
+    };
+    spa.controller = {
+        config:function(config) {
+            _config = config;
+        }
+        ,main:function() {
+            this.jump(_config.main);
+        }
+        ,listener: function(router) {
+            var that = this;
+            $(document).ready(function() {
+                var bindViews = _config.bindViews;
+                for(var container in bindViews) {
+                    var views = bindViews[container];
+                    for(var i in views) {
+                        views[i].container = container;
+                        views[i].bindEvents();
+                    }
+                }
+                var hash = spa.lang.getUrlHash();
+                if(hash !== _config.main) {
+                    that.jump(_config.main);
+                } else {
+                    onchange();
+                }
+            });
+            _routers = router;
+            /*document.addEventListener("load", onchange, false);*/
+            global.addEventListener("hashchange", onchange, false);
+        },
+        jump:function(hash, append) {
+            if(arguments.length == 2 && append) {
+                location.hash += hash;
+            } else {
+                location.hash = "#" + hash;
+            }
+        }
+    }
+    return spa;
+}((SPA || {}), this));

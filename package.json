@@ -1,0 +1,30 @@
+{
+  "name": "spajs",
+  "description": "MVC框架",
+  "version": "0.1.9",
+  "author": {
+    "name": "memory"
+  },
+  "main": "src/spa",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "dependencies": {
+    "zepto": "0.0.4",
+    "art-template": "^2.0.3-rc5"
+  },
+  "devDependencies": {
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-watch": "~0.4.0",
+    "grunt-contrib-qunit": "~0.4.0",
+    "grunt": "~0.4.4",
+    "qunitjs": "^1.14.0"
+  },
+  "keywords": [
+    "single page application",
+    "mvc"
+  ]
+}
