@@ -161,7 +161,7 @@ view负责界面的渲染，目前采用artTemplate作为模板语言，view关�
 
 
 ## Examples
-_(Coming soon)_
+_(Coming soon)___
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
