@@ -47,9 +47,9 @@ var SPA = (function (spa, global) {
             if(!this.compileTemplate) {//编译模板
                 var that = this;
                 this.loadTemplate(function() {
-                    if (arguments.length === 1) {
+                    if (data) {
                         that.render(data);
-                    } else if (arguments.length === 0) {
+                    } else {
                         that.render();
                     }
                 });
