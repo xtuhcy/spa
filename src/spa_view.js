@@ -14,17 +14,51 @@ var SPA = (function (spa, global) {
         render: function (data) {
             var html;
             if (arguments.length === 1) {
-                html = spa.template.render(this.templateId, data);
+                if(!this.compileTemplate) {
+                    var tmpl = $("#"+this.templateId).html();
+                    this.compileTemplate = spa.template.compile(this.templateId, tmpl);
+                }
+                html = this.compileTemplate(data);
             } else {
-                html = $("#"+this.templateId).html();
+                if(!this.compileTemplate) {
+                    html = $("#"+this.templateId).html();
+                } else {
+                    html = this.compileTemplate();
+                }
             }
             $(this.container).html(html);
         },
+        loadTemplate:function(success) {
+            var that = this;
+            if(this.template) {//编译远程模板
+                $.get(this.template, function(tmpl){
+                    that.compileTemplate = spa.template.compile(that.templateId, tmpl);
+                    if(success) {
+                        success.call(that);
+                    }
+                });
+            } else {//编译本地模板
+                var tmpl = $("#"+this.templateId).html();
+                this.compileTemplate = spa.template.compile(this.templateId, tmpl);
+                success.call(that);
+            }
+        },
         show: function (data) {
-            if (arguments.length === 1) {
-                this.render(data);
-            } else if (arguments.length === 0) {
-                this.render();
+            if(!this.compileTemplate) {//编译模板
+                var that = this;
+                this.loadTemplate(function() {
+                    if (arguments.length === 1) {
+                        that.render(data);
+                    } else if (arguments.length === 0) {
+                        that.render();
+                    }
+                });
+            } else {
+                if (arguments.length === 1) {
+                    this.render(data);
+                } else if (arguments.length === 0) {
+                    this.render();
+                }
             }
         },
         remove:function() {

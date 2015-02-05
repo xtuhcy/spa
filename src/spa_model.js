@@ -10,6 +10,8 @@ var SPA = (function (spa, global) {
         ,dataType:"json"
         ,validator:spa.validator.defaultValidator
         ,validate:null
+        ,cacheTime:0
+        ,cacheKey:null
         ,interceptors:[spa.interceptor.viewsInterceptor]
         ,addInterceptorFirst:function(interceptor) {
             this.interceptors.unshift(interceptor);
@@ -49,6 +51,7 @@ var SPA = (function (spa, global) {
                 ,data : data
                 ,dataType: that.dataType
                 ,success: function(data) {
+                    that.json = data;
                     success.call(that, data);
                 }
                 ,error: function(xhr, type) {
@@ -100,8 +103,33 @@ var SPA = (function (spa, global) {
             for(i in views) {
                 views[i].loading();
             }
+            //是否有缓存
+            if(this.cacheTime > 0) {
+                var cacheKey = this.cacheKey;
+                if(cacheKey !== null) {
+                    var cacheValue = spa.localStorage.get(cacheKey);
+                    if(cacheValue) {//缓存没过期
+                        console.debug("%s get from cache.", cacheKey);
+                        //拦截器
+                        for(i in interceptors) {
+                            console.debug("interceptor:%o", interceptors[i]);
+                            if(!interceptors[i].process(cacheValue, views)) {
+                                break;
+                            }
+                        }
+                        return;
+                    }
+                }
+            }
             //请求数据
             this.getResult(paras, function(data) {
+                //存缓存
+                if(this.cacheTime > 0) {
+                    var cacheKey = this.cacheKey;
+                    if(cacheKey !== null) {
+                        spa.localStorage.set(cacheKey, data, this.cacheTime);
+                    }
+                }
                 //拦截器
                 for(i in interceptors) {
                     console.debug("interceptor:%o", interceptors[i]);
@@ -112,6 +140,7 @@ var SPA = (function (spa, global) {
             }, function(xhr, type) {
                 console.error('xhr : %o', xhr);
                 console.error('xhr : %o', type);
+                //缓存里如果存在，读取缓存中的?????
                 //error处理
                 for(i in views) {
                     views[i].error(this);

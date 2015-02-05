@@ -6,6 +6,9 @@ var SPA = (function (spa, global) {
         render : function(id, data) {
             return template.render(id, data);
         }
+        ,compile : function(id, tmpl) {
+            return template.compile(id, tmpl);
+        }
     }
     return spa;
 }((SPA || {}), this));

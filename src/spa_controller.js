@@ -52,12 +52,13 @@ var SPA = (function (spa, global) {
                             views[i].bindEvents();
                         }
                     }
-                    var hash = spa.lang.getUrlHash();
-                    if(hash !== _config.main) {
-                        that.jump(_config.main);
+                    /*var hash = spa.lang.getUrlHash();
+                    if(hash !== _config.main) {//当前hash不是入口
+                        that.jump(_config.main + "/" + hash);
                     } else {
                         onchange();
-                    }
+                    }*/
+                    onchange();
                 }
             });
             _routers = router;
