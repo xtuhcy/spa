@@ -30,7 +30,9 @@ var SPA = (function (spa, global) {
                     _parent = child;
                     _funcType = parent;
                     _funcType.prototype = _parent;
-                    return new _funcType();
+                    var extendObject = new _funcType();
+                    extendObject._super = _parent;
+                    return extendObject;
                 } else {//extend(child, parent)
                     _child = child;
                     _parent = parent;

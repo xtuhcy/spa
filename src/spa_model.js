@@ -8,6 +8,8 @@ var SPA = (function (spa, global) {
         ,tagName:""
         ,tagParameter:null
         ,dataType:"json"
+        ,async:true
+        ,method:"GET"
         ,validator:spa.validator.defaultValidator
         ,validate:null
         ,cacheTime:0
@@ -29,7 +31,7 @@ var SPA = (function (spa, global) {
          */
         ,getResult:function(paras, success, error) {
             var that = this;
-            var type = "GET";
+            var type = that.method;
             var data = "";
             if(this.tagParameter !== null) {
                 type = "POST";
@@ -42,7 +44,15 @@ var SPA = (function (spa, global) {
             var urlParameter = "";
             if(paras !== null) {
                 urlParameter = spa.lang.jsonToUrl(paras);
-                url = url + "?" + urlParameter;
+                if(type.toLowerCase() === "get") {
+                    url = url + "?" + urlParameter;
+                } else {
+                    if(data === "") {
+                        data = urlParameter;
+                    } else {
+                        data = data+"&"+urlParameter;
+                    }
+                }
             }
             console.debug("url = " + url);
             $.ajax({
@@ -50,6 +60,7 @@ var SPA = (function (spa, global) {
                 ,type: type
                 ,data : data
                 ,dataType: that.dataType
+                ,async:that.async
                 ,success: function(data) {
                     that.json = data;
                     success.call(that, data);
@@ -186,7 +197,7 @@ var SPA = (function (spa, global) {
                 console.error('xhr : %o', xhr);
                 console.error('xhr : %o', type);
                 if(errorCallBack) {
-                    errorCallBack.call(this);
+                    errorCallBack.call(this, {error:xhr});
                 }
             });
         }

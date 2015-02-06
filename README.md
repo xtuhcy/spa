@@ -2,7 +2,9 @@
 
 单页应用MVC框架
 
-依赖zepto和artTemplate，已经将zepto和artTemplate编译进项目中
+依赖zepto和artTemplate，已经将zepto和artTemplate编译进项目中.
+0.2.6之前采用artTemplate2.x
+0.3.0开始采用artTempate3.x使用简洁语法
 
 ## 下载和使用
 ### 下载

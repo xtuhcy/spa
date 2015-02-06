@@ -7,7 +7,11 @@ var SPA = (function (spa, global) {
             return template.render(id, data);
         }
         ,compile : function(id, tmpl) {
-            return template.compile(id, tmpl);
+            if(id) {
+                return template.compile(id, tmpl);
+            } else {
+                return template.compile(tmpl);
+            }
         }
     }
     return spa;

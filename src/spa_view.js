@@ -13,18 +13,10 @@ var SPA = (function (spa, global) {
         events: null,//视图包含的事件
         render: function (data) {
             var html;
-            if (arguments.length === 1) {
-                if(!this.compileTemplate) {
-                    var tmpl = $("#"+this.templateId).html();
-                    this.compileTemplate = spa.template.compile(this.templateId, tmpl);
-                }
+            if(data) {
                 html = this.compileTemplate(data);
             } else {
-                if(!this.compileTemplate) {
-                    html = $("#"+this.templateId).html();
-                } else {
-                    html = this.compileTemplate();
-                }
+                html = this.compileTemplate();
             }
             $(this.container).html(html);
         },
@@ -32,14 +24,14 @@ var SPA = (function (spa, global) {
             var that = this;
             if(this.template) {//编译远程模板
                 $.get(this.template, function(tmpl){
-                    that.compileTemplate = spa.template.compile(that.templateId, tmpl);
+                    that.compileTemplate = spa.template.compile(tmpl);
                     if(success) {
                         success.call(that);
                     }
                 });
             } else {//编译本地模板
                 var tmpl = $("#"+this.templateId).html();
-                this.compileTemplate = spa.template.compile(this.templateId, tmpl);
+                this.compileTemplate = spa.template.compile(tmpl);
                 success.call(that);
             }
         },

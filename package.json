@@ -1,7 +1,7 @@
 {
   "name": "spajs",
   "description": "MVC框架",
-  "version": "0.2.6",
+    "version": "0.3.0",
   "author": {
     "name": "memory"
   },
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "zepto": "0.0.4",
-    "art-template": "^2.0.3-rc5"
+    "art-template": "^3.0.3"
   },
   "devDependencies": {
     "grunt-contrib-concat": "~0.3.0",
