@@ -599,7 +599,7 @@ var SPA = (function (spa, global) {
                 }
             }, function(xhr, type) {
                 console.error('xhr : %o', xhr);
-                console.error('xhr : %o', type);
+                console.error('type : %o', type);
                 //缓存里如果存在，读取缓存中的?????
                 //error处理
                 for(i in views) {
@@ -698,12 +698,17 @@ var SPA = (function (spa, global) {
     var onchange = function(event) {
         var hash = spa.lang.getUrlHash();
         console.debug("hash : %s, event : %o", hash, event);
+        var hasMatch = false;
         for(var router in _routers) {
             var matchParams = matchRouter(router, hash);
             if(matchParams.match) {
                 _routers[router].apply(spa.controller, matchParams.params);
+                hasMatch = true;
                 //break;
             }
+        }
+        if(!hasMatch && !SPA.lang.isUndefined(_config.main)) {
+            _routers[_config.main].apply(spa.controller, matchParams.params);
         }
     };
     spa.controller = {

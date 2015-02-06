@@ -23,12 +23,17 @@ var SPA = (function (spa, global) {
     var onchange = function(event) {
         var hash = spa.lang.getUrlHash();
         console.debug("hash : %s, event : %o", hash, event);
+        var hasMatch = false;
         for(var router in _routers) {
             var matchParams = matchRouter(router, hash);
             if(matchParams.match) {
                 _routers[router].apply(spa.controller, matchParams.params);
+                hasMatch = true;
                 //break;
             }
+        }
+        if(!hasMatch && !SPA.lang.isUndefined(_config.main)) {
+            _routers[_config.main].apply(spa.controller, matchParams.params);
         }
     };
     spa.controller = {

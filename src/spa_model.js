@@ -150,7 +150,7 @@ var SPA = (function (spa, global) {
                 }
             }, function(xhr, type) {
                 console.error('xhr : %o', xhr);
-                console.error('xhr : %o', type);
+                console.error('type : %o', type);
                 //缓存里如果存在，读取缓存中的?????
                 //error处理
                 for(i in views) {
