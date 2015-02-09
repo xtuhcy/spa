@@ -9,16 +9,14 @@
 var SPA = (function (spa, global) {
     var view = {
         templateId: "",//视图模板id
+        width:0,
+        height:0,
         //container: "",//视图容器
         events: null,//视图包含的事件
         render: function (data) {
-            var html;
-            if(data) {
-                html = this.compileTemplate(data);
-            } else {
-                html = this.compileTemplate();
-            }
-            $(this.container).html(html);
+            $(this.container).html(this.compileTemplate(data));
+            this.width = $(this.container).width;
+            this.height = $(this.container).height;
         },
         loadTemplate:function(success) {
             var that = this;
