@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "zepto": "0.0.4",
-    "art-template": "^3.0.3"
+    "art-template": "^3.0.3",
+    "iscroll": "^4.0.0"
   },
   "devDependencies": {
     "grunt-contrib-concat": "~0.3.0",
