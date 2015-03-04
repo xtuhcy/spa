@@ -71,7 +71,7 @@ var SPA = (function (spa, global) {
                 for (eventName in events) {//事件
                     //$(newView.container).off(eventName, elSelector);
                     $(this.container).on(eventName, elSelector, events[eventName]);
-                    console.debug("add event to " + this.container + " " +elSelector + ":" + eventName);
+                    console.debug("add event to '" + this.container + " " +elSelector + "':" + eventName);
                 }
             }
         }
@@ -87,7 +87,12 @@ var SPA = (function (spa, global) {
                 _parentView = parentView
             }
             var newView = spa.lang.extend(o, _parentView, this.View);
-            newView.bindEvents();
+            if(newView.container) {
+                newView.bindEvents();
+            }
+            if(newView.init) {
+                newView.init();
+            }
             return newView;
         }
 

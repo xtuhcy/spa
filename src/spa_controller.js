@@ -48,6 +48,9 @@ var SPA = (function (spa, global) {
         ,listener: function(router) {
             var that = this;
             $(document).ready(function() {
+                if(_config && _config.ready) {
+                    _config.ready();//全局初始化函数
+                }
                 if(_config && _config.bindViews) {
                     var bindViews = _config.bindViews;
                     for(var container in bindViews) {

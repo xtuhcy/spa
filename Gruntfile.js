@@ -18,7 +18,7 @@ module.exports = function (grunt) {
             dist: {
                 src: [
                     'node_modules/zepto/zepto.min.js',
-                    'node_modules/art-template/dist/template.js',
+                    'node_modules/art-template/dist/template-native.js',
                     'src/spa_lang.js',
                     'src/spa_template.js',
                     'src/spa_view.js',
