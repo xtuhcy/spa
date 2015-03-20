@@ -3,8 +3,6 @@
 单页应用MVC框架
 
 依赖zepto和artTemplate，已经将zepto和artTemplate编译进项目中.
-0.2.6之前采用artTemplate2.x
-0.3.0开始采用artTempate3.x使用简洁语法
 
 ## 下载和使用
 ### 下载
@@ -16,10 +14,10 @@
 ## 使用手册
 ###Model-和数据相关的都放这里
 model负责数据处理，所有和数据相关的业务逻辑都放在这里，model关心的几个要点:
-
 1. 数据怎么获取
 2. 请求参数的校验
-3. 数据获取后的回调
+3. 对数据的拦截处理
+4. 数据获取后的回调
 
 ####创建一个典型的ajax的model
     var mainModel = SPA.model.create({
@@ -49,10 +47,7 @@ model负责数据处理，所有和数据相关的业务逻辑都放在这里，
             }
         }
     }, SPA.model.simpleModel);
-上面的model数据来源于本地定义的变量，继承自SPA.model.simpleModel
-
-####本地存储model
-_(Coming soon)_
+如果model的数据不是通过ajax获得，而是来自本地的一些数据，可以继承自SPA.model.simpleModel，重写getData方法，返回需要的数据。
 
 ####数据校验
     loginModel = SPA.model.create({
@@ -140,17 +135,16 @@ data->filter1(callback)->filter2(callback)……
 view负责界面的渲染，目前采用artTemplate作为模板语言，view关心的几个要点：
 
 1. 模板语言artTemplate
-2. 视图渲染方法render(data)
-3. 数据加载中渲染方法loading()
-4. 数据获取错误渲染方法error(model)
-5. 事件处理
+2. 视图定义
+3. 视图渲染方法render(data)
+4. 数据加载中渲染方法loading()
+5. 数据获取错误渲染方法error(model)
+6. 事件处理
 
 ####模板语言artTemplate
 
-1. 创建模板
-
+1. 本地模板定义：本地模板定义在页面中，如下：
 ```html
-
     <script id="book" type="text/html">
     <ul class="list">
         <%for(i = 0; i < list.length; i ++) {%>
@@ -160,18 +154,41 @@ view负责界面的渲染，目前采用artTemplate作为模板语言，view关�
     </script>
 ```
 
+2.远程模板定义：模板可以按需从远程下载
 
+####视图定义
+1.本地视图定义
+    页面中加入：
+    <script id="book" type="text/html">
+    <ul class="list">
+        <%for(i = 0; i < list.length; i ++) {%>
+        <li id="<%=i%>" class="book"><%=list[i]%></li>
+        <%}%>
+    </ul>
+    </script>
+    定义视图对象：
+    ajh.bookView = SPA.view.create({
+        templateId:"book"
+    });
+2.远程视图定义
+    将模板内容放入template文件下，book.html
+    ajh.bookView = SPA.view.create({
+        template:"template/book.html"
+    });
 
+##view和model的结合使用
+    model1.notifyView({parametes}, [view1, view2])
+
+    model1.callback({parameters}, function(data){
+
+    }, function(error){
+
+    });
 ## Examples
-_(Coming soon)___
+    http://cs.i139.cn/aijuhui/aijuhui/dist/index.html
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
-
-_Also, please don't edit files in the "dist" subdirectory as they are generated via Grunt. You'll find source code in the "lib" subdirectory!_
-
-## Release History
-_(Nothing yet)_
+    memory.hu
 
 ## License
 Copyright (c) 2014 huchengyi  
