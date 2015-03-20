@@ -70,8 +70,10 @@ var SPA = (function (spa, global) {
                 events = elementEvents[elSelector];
                 for (eventName in events) {//事件
                     //$(newView.container).off(eventName, elSelector);
-                    $(this.container).on(eventName, elSelector, events[eventName]);
-                    console.debug("add event to '" + this.container + " " +elSelector + "':" + eventName);
+                    //$(this.container).on(eventName, elSelector, events[eventName]);
+                    var container = this.container;
+                    $(document).on(eventName, container + " " + elSelector, events[eventName]);
+                    console.debug("add event to '" + container + " " +elSelector + "':" + eventName);
                 }
             }
         }

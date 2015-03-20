@@ -61,6 +61,7 @@ var SPA = (function (spa, global) {
                 ,data : data
                 ,dataType: that.dataType
                 ,async:that.async
+                ,cache:false
                 ,success: function(data) {
                     that.json = data;
                     success.call(that, data);

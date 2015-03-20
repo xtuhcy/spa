@@ -9,10 +9,10 @@
 var SPA = (function (spa, global) {
     spa.lang = {
         /**
-         * 属性复制
+         * 属性复�?
          *
          * @param dist 目标对象
-         * @param src 原对象
+         * @param src 原对�?
          */
         copyProperty: function (dist, src) {
             for (prop in src) {
@@ -181,7 +181,7 @@ var SPA = (function (spa, global) {
             curDate:function() {
                 var curDate=new Date();
                 var month=curDate.getMonth()+1;
-                if(month<10) month='0'+(month+1);
+                if(month<10) month='0'+month;
                 var day=curDate.getDate();
                 if(day<10) day='0'+day;
                 curDate=curDate.getFullYear()+'-'+month+'-'+day;
@@ -191,10 +191,10 @@ var SPA = (function (spa, global) {
                 date = new Date(date);
                 var map = {
                     "M": date.getMonth() + 1, //月份
-                    "d": date.getDate(), //日
+                    "d": date.getDate(), //�?
                     "h": date.getHours(), //小时
-                    "m": date.getMinutes(), //分
-                    "s": date.getSeconds(), //秒
+                    "m": date.getMinutes(), //�?
+                    "s": date.getSeconds(), //�?
                     "q": Math.floor((date.getMonth() + 3) / 3), //季度
                     "S": date.getMilliseconds() //毫秒
                 };
@@ -223,7 +223,7 @@ var SPA = (function (spa, global) {
                 url += tmp;
             }
             if(url.length > 1) {
-                return url.substr(0, url.length - 1);//去掉最后一个&
+                return url.substr(0, url.length - 1);//去掉最后一�?
             } else {
                 return url;
             }

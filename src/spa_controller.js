@@ -24,12 +24,24 @@ var SPA = (function (spa, global) {
         var hash = spa.lang.getUrlHash();
         console.debug("hash : %s, event : %o", hash, event);
         var hasMatch = false;
-        for(var router in _routers) {
-            var matchParams = matchRouter(router, hash);
-            if(matchParams.match) {
-                _routers[router].apply(spa.controller, matchParams.params);
-                hasMatch = true;
-                //break;
+        if(spa.lang.isArray(_routers)) {
+            for(var i = 0; i < _routers.length; i++) {
+                var mapping = _routers[i].mapping;
+                var action = _routers[i].action;
+                var matchParams = matchRouter(mapping, hash);
+                if(matchParams.match) {
+                    action.apply(spa.controller, matchParams.params);
+                    hasMatch = true;
+                }
+            }
+        } else {
+            for(var router in _routers) {
+                var matchParams = matchRouter(router, hash);
+                if(matchParams.match) {
+                    _routers[router].apply(spa.controller, matchParams.params);
+                    hasMatch = true;
+                    //break;
+                }
             }
         }
         if(!hasMatch && !SPA.lang.isUndefined(_config.main)) {
@@ -60,17 +72,10 @@ var SPA = (function (spa, global) {
                             views[i].bindEvents();
                         }
                     }
-                    /*var hash = spa.lang.getUrlHash();
-                    if(hash !== _config.main) {//当前hash不是入口
-                        that.jump(_config.main + "/" + hash);
-                    } else {
-                        onchange();
-                    }*/
                     onchange();
                 }
             });
             _routers = router;
-            /*document.addEventListener("load", onchange, false);*/
             global.addEventListener("hashchange", onchange, false);
         },
         jump:function(hash, append) {
