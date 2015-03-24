@@ -9,6 +9,7 @@ var SPA = (function (spa, global) {
         ,tagParameter:null
         ,dataType:"json"
         ,async:true
+        ,cache:false
         ,method:"GET"
         ,validator:spa.validator.defaultValidator
         ,validate:null
@@ -61,7 +62,7 @@ var SPA = (function (spa, global) {
                 ,data : data
                 ,dataType: that.dataType
                 ,async:that.async
-                ,cache:false
+                ,cache:that.cache
                 ,success: function(data) {
                     that.json = data;
                     success.call(that, data);

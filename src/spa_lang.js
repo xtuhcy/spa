@@ -9,10 +9,10 @@
 var SPA = (function (spa, global) {
     spa.lang = {
         /**
-         * 属性复�?
+         * 属性复�?
          *
          * @param dist 目标对象
-         * @param src 原对�?
+         * @param src 原对�?
          */
         copyProperty: function (dist, src) {
             for (prop in src) {
@@ -124,6 +124,22 @@ var SPA = (function (spa, global) {
                     return str;
                 }
             }
+            ,substringBeforeLast:function(str, split) {
+                var idx = str.lastIndexOf(split);
+                if(idx > 0) {
+                    return str.substr(0, idx);
+                } else {
+                    return str;
+                }
+            }
+            ,substringAfterLast:function(str, split) {
+                var idx = str.lastIndexOf(split);
+                if(idx > 0) {
+                    return str.substr(idx + 1, str.length);
+                } else {
+                    return str;
+                }
+            }
             ,startsWith: function(str, starts){
                 if (starts === '') return true;
                 if (str == null || starts == null) return false;
@@ -191,10 +207,10 @@ var SPA = (function (spa, global) {
                 date = new Date(date);
                 var map = {
                     "M": date.getMonth() + 1, //月份
-                    "d": date.getDate(), //�?
+                    "d": date.getDate(), //�?
                     "h": date.getHours(), //小时
-                    "m": date.getMinutes(), //�?
-                    "s": date.getSeconds(), //�?
+                    "m": date.getMinutes(), //�?
+                    "s": date.getSeconds(), //�?
                     "q": Math.floor((date.getMonth() + 3) / 3), //季度
                     "S": date.getMilliseconds() //毫秒
                 };
@@ -223,7 +239,7 @@ var SPA = (function (spa, global) {
                 url += tmp;
             }
             if(url.length > 1) {
-                return url.substr(0, url.length - 1);//去掉最后一�?
+                return url.substr(0, url.length - 1);//去掉最后一�?
             } else {
                 return url;
             }
